@@ -27,7 +27,10 @@ function handleBookClick(event) {
 
 function handleBookLike(event) {
   if (!!currentBook.users.find( user => user.id === currentUser.id)) {
-    alert("You've already liked this book, silly!");
+    // alert("You've already liked this book, silly!");
+    usersWhoHaveLiked = currentBook.users;
+    usersWhoHaveLiked.pop(currentUser);
+    patchLikeToBook(usersWhoHaveLiked);
   } else {
     usersWhoHaveLiked = currentBook.users;
     usersWhoHaveLiked.push(currentUser);
