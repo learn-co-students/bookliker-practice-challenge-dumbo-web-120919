@@ -18,6 +18,7 @@ let likeButton;
 bookList.addEventListener("click", handleBookClick);
 
     /**** EVENT HANDLERS ****/
+// handles clicking a book on the sidebar, sending it to render
 function handleBookClick(event) {
   if (event.target.className == "book-li") {
     clickedBook = allBooks.find( book => book.id === parseInt(event.target.id) );
@@ -25,6 +26,7 @@ function handleBookClick(event) {
   }
 };
 
+// handles clicking the like button on a book
 function handleBookLike(event) {
   if (!!currentBook.users.find( user => user.id === currentUser.id)) {
     // alert("You've already liked this book, silly!");
@@ -39,6 +41,7 @@ function handleBookLike(event) {
 };
 
     /**** FETCHES ****/
+// initial fetch to render all books on the sidebar
 const initialBookFetch = function() {
   fetch('http://localhost:3000/books')
   .then( response => response.json() )
@@ -48,6 +51,7 @@ const initialBookFetch = function() {
   });
 }
 
+// PATCH fetch to add or remove likes from a book
 const patchLikeToBook = function(usersWhoHaveLiked) {
   return fetch(`http://localhost:3000/books/${currentBook.id}`, {
     method: "PATCH",
@@ -64,6 +68,7 @@ const patchLikeToBook = function(usersWhoHaveLiked) {
 }
 
     /**** RENDER FUNCTIONS ****/
+// functions to render one/all books to the sidebar
 function renderOneBook(book) {
   bookLi = document.createElement("li");
   bookLi.id = book.id;
@@ -76,6 +81,7 @@ function renderAllBooks(books) {
   books.forEach( book => renderOneBook(book) );
 };
 
+// function to render a selected book's info to the body
 function renderBookToShowPanel(book) {
   clearChildren(showPanel);
   currentBook = book;
@@ -93,6 +99,7 @@ function renderBookToShowPanel(book) {
 
   book.users.forEach( user => renderUserWhoLiked(user) );
 }
+// function to be used to render all users who have liked a book
 function renderUserWhoLiked(user) {
   let usersWhoLikedList = document.getElementById("users-who-liked");
   let userWhoLikedLi = document.createElement("li");
@@ -103,6 +110,7 @@ function renderUserWhoLiked(user) {
 };
 
     /**** MISC. FUNCTIONS ****/
+// standard refresh element function
 function clearChildren(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -110,6 +118,7 @@ function clearChildren(element) {
 }
 
     /**** INITIAL RUNNERS ****/
+// fetches all books and loads the sidebar on init
 initialBookFetch();
 
 // CODE ENDS HERE
