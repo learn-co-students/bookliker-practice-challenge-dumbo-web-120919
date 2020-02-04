@@ -16,7 +16,7 @@ function renderAllBooks(data) {
 }
 
 function renderOneBook(book) {
-    // show book list
+    // show sidebar book list
     const listLi = document.createElement("li")
     listLi.innerText = book.title
     listUl.append(listLi)
